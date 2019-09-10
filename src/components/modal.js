@@ -44,13 +44,19 @@ class ModalComponent extends Component{
 				onCancle={this.onHandleCancle}
 			>
 			{type===1?(
-				<Input size='large' placeholder='id'/>
-				<Input size='large' placeholder='pw'/>
-				<Button type='primary'>Going</Button>
+				<div>
+					<Input size='large' placeholder='id'></Input>
+					<Input size='large' placeholder='pw'></Input>
+					<Button type='primary'>Going</Button>
+				</div>
+				
 			):(
-				<Input size='large' placeholder='id'/>
-				<Input size='large' placeholder='pw'/>
-				<Button type='primary'>Goout</Button>
+				<div>
+					<Input size='large' placeholder='id'/>
+					<Input size='large' placeholder='pw'/>
+					<Button type='primary'>Goout</Button>
+				</div>
+				
 			)}
 			</Modal>
 		);

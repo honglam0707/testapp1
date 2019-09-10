@@ -11,19 +11,8 @@ export const actOpenModal=(visible,type)=>{
 }
 
 export const actGoing=(us)=>{
-	return(dispatch){
-		axios
-			.post('http://localhost:1234/user/login',us)
-			.then(res=>{
-				const {token} = res.data;
-				
-				const Decode = jwtDecode(token)
-				setAuthToken(token)
-				dispatch(setCurrentUs(Decode))
-			})
-			.catch(err=>{
-				
-			})
+	return{
+
 	}
 }
 
