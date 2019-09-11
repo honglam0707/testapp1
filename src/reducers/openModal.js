@@ -1,11 +1,14 @@
 import *as Types from '../store/actionType'
-const initinalize={visible:false,type:0}
+let initinalize={visible:false,set:false}
 
 const openModal = (state=initinalize,action)=>{
 	switch(action.type){
 		case Types.OPEN_MODAL:
-			state.visible=action.visible;
-			state.type=action.type;
+			state={
+				...state,
+				visible:action.visible,
+				set:action.set
+			}
 			return {...state};
 		default: return {...state}
 	}

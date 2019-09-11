@@ -3,8 +3,8 @@ import {Button} from 'antd';
 import {connect} from 'react-redux';
 import {actOpenModal} from '../store/action'
 class HeaderComponent extends Component{
-	onOpenModal=(visible,type)=>{
-		this.props.onDispatch(visible,type);
+	onOpenModal=(visible,set)=>{
+		this.props.onDispatch(visible,set);
 	}
 	render(){
 		return (
@@ -14,8 +14,8 @@ class HeaderComponent extends Component{
 					<h1>TVPS--01</h1>
 				</div>
 				<div className='header--right'>
-					<Button type='primary' ghost onClick={()=>this.onOpenModal(true,1)}>Going</Button>
-					<Button type='danger' ghost onClick={()=>this.onOpenModal(true,2)}>Goout</Button>
+					<Button type='primary' ghost onClick={()=>this.onOpenModal(true,true)}>Going</Button>
+					<Button type='danger' ghost onClick={()=>this.onOpenModal(true,false)}>Goout</Button>
 				</div>
 				<div className='clear'></div>
 			  </div>
@@ -25,8 +25,8 @@ class HeaderComponent extends Component{
 }
 const mapDispatchToProps=(dispatch)=>{
 	return{
-		onDispatch:(visible,type)=>{
-			dispatch(actOpenModal(visible,type))
+		onDispatch:(visible,set)=>{
+			dispatch(actOpenModal(visible,set))
 		}
 	
 	}

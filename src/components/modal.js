@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
-import {Modal,Input,Button} from 'antd'
+import {Modal,Input,Button,Row,Col} from 'antd'
 import {connect} from 'react-redux'
-
+import {actOpenModal} from '../store/action'
 class ModalComponent extends Component{
 	constructor(props){
 		super(props);
@@ -10,62 +10,75 @@ class ModalComponent extends Component{
 			type:0
 		}
 	}
+	onCloseModal=(visible,set)=>{
+		this.props.onDispatch(visible,set);
+	}
 	componentWillReceiveProps(nextprops){
-		if(nextprops.visibleProps)
-		{
-			this.setState({
-				visible:true,
-				type:nextprops.type
-			})
-		}
-		else{
-			this.setState({
-				visible:false,
-				type:0
-			})
-		}
-	}
-	onHandleOk=(e)=>{
-		this.setState({
-			visible:false,type:0
-		})
-	}
-	onHandleCancle=(e)=>{
-		this.setState({
-			visible:false,type:0
-		})
+		
 	}
 	render(){
-		let {visible,type} = this.state;
+		let {visible,set} = this.props;
 		return(
 			<Modal	
+				className='mymodal'
+			    title= {set?"Going":"Goout"}
 				visible={visible}
 				onOk={this.onHandleOk}
 				onCancle={this.onHandleCancle}
+				closable={false}
+				maskClosable={true}
+				destroyOnClose={true}
+				onClose={this.onHandleCancle}
+				width={450}
+				footer={[
+					<Button key="back" onClick={()=>this.onCloseModal(false)}>
+					  Cancle
+					</Button>,
+					<Button key="submit" type="primary"  onClick={()=>this.onCloseModal(false,false)}>
+					  Submit
+					</Button>
+				]}
 			>
-			{type===1?(
-				<div>
-					<Input size='large' placeholder='id'></Input>
-					<Input size='large' placeholder='pw'></Input>
-					<Button type='primary'>Going</Button>
-				</div>
+				{set?(
+					<div>
+						<Input  placeholder='email'/>
+						<Input  placeholder='pwd'/>
+					</div>
+				):(
+					<div>
+						<Input  placeholder='email'/>
+						<Input  placeholder='pwd'/>
+						<Row>
+							<Col span={8}><Input  placeholder='name'/></Col>
+							<Col span={4}></Col>
+							<Col span={12}><Input  placeholder='last name'/></Col>
+						</Row>
+						<Row>
+							<Col span={6}><Input  placeholder='phone'/></Col>
+							<Col span={6}><Input  placeholder='sex'/></Col>
+							<Col span={6}><Input placeholder='birth of date'/></Col>
+						</Row>
+						<Input  placeholder='address'/>
+						<Input  placeholder='address'/>
+					</div>
+				)}
 				
-			):(
-				<div>
-					<Input size='large' placeholder='id'/>
-					<Input size='large' placeholder='pw'/>
-					<Button type='primary'>Goout</Button>
-				</div>
-				
-			)}
 			</Modal>
 		);
 	}
 }
-const mapStateToProps=(state)=>{
+const mapDispatchToProps=(dispatch)=>{
 	return{
-		visibleProps:state.visible,
-		type:state.type
+		onDispatch:(visible,set)=>{
+			dispatch(actOpenModal(visible,set))
+		}
+	
 	}
 }
-export default connect(mapStateToProps,null)(ModalComponent);
+const mapStateToProps=(state)=>{
+	return{
+		visible:state.stateModal.visible,
+		set:state.stateModal.set
+	}
+}
+export default connect(mapStateToProps,mapDispatchToProps)(ModalComponent);

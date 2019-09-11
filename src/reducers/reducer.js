@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import openModal from './openModal'
 const Myreducer = combineReducers({
-	visible:openModal
+	stateModal:openModal
 })
 export default Myreducer

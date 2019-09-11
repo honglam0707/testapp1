@@ -2,11 +2,11 @@ import *as Types from './actionType'
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
 import setAuthToken from '../until/setAuthToken'
-export const actOpenModal=(visible,type)=>{
+export const actOpenModal=(visible,set)=>{
 	return{
 		type:Types.OPEN_MODAL,
 		visible,
-		type
+		set
 	}
 }
 
