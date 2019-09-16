@@ -1,5 +1,5 @@
 import *as Types from '../store/actionType'
-let initinalize={visible:false,set:false}
+let initinalize={visible:false,set:false,rp:false}
 
 const openModal = (state=initinalize,action)=>{
 	switch(action.type){
@@ -7,7 +7,8 @@ const openModal = (state=initinalize,action)=>{
 			state={
 				...state,
 				visible:action.visible,
-				set:action.set
+				set:action.set,
+				rp:action.rp
 			}
 			return {...state};
 		default: return {...state}

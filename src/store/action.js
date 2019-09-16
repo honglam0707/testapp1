@@ -2,17 +2,35 @@ import *as Types from './actionType'
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
 import setAuthToken from '../until/setAuthToken'
-export const actOpenModal=(visible,set)=>{
+import history from '../history';
+export const actOpenModal=(visible,set,rp)=>{
 	return{
 		type:Types.OPEN_MODAL,
 		visible,
-		set
+		set,
+		rp
 	}
 }
-
-export const actGoing=(us)=>{
+export const actChangeList=(status)=>{
 	return{
-
+		type:Types.SELECT_PAGE,
+		status
+	}
+}
+export const actRegisterUser=(newUser)=>{
+	return(dispatch)=>{
+		axios
+			.post('http://localhost:1234/user/register',newUser)
+			.then(()=>{
+					history.push('/')
+					
+			})
+			.catch(err=>{
+				dispatch({
+					type:Types.GET_ERRORS,
+					err
+				})
+			})
 	}
 }
 

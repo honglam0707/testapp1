@@ -1,36 +1,64 @@
 import React, { Component } from 'react'
-import { Modal, Input, Button, Row, Col, Form, Icon, Checkbox } from 'antd'
 import { connect } from 'react-redux'
-import { actOpenModal } from '../store/action'
-import CollectionCreateFormLogin from './form/createForm'
-import CollectionCreateFormSignin from './form/createForm'
+import { actOpenModal,actRegisterUser } from '../store/action'
+import {CollectionCreateFormLogin} from './form/createFormLogin'
+import {CollectionCreateFormSignin} from './form/createFormSignin'
+import {CollectionCreateFormForget} from './form/createFormForget'
+
 class ModalComponent extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			visible: false,
-			type: false
+			type: false,
+			visibleF:false,
+			rp:false,
+			
 		}
 
 	}
 	onCloseModal = (visible, set) => {
 		this.props.onDispatch(visible, set);
 	}
-	componentWillReceiveProps(nextProps) {
+	UNSAFE_componentWillReceiveProps(nextProps) {
 		if (nextProps.visibled) {
 			this.setState({
 				visible: true,
-				type: nextProps.set
+				type: nextProps.set,
+				rp:nextProps.rp
 			})
 		}
-
-
 	}
-
-	handleCancel = () => {
-		this.onCloseModal(false, false);
+	changeModalForget = () =>{
 		this.setState({
-			visible: false
+			visible:false,
+			type:false,
+			visibleF:true,
+			rp:false
+		})
+	}
+	changeModalSign = () =>{
+		this.setState({
+			visible:true,
+			type:false,
+			rp:false
+		})
+	}
+	changeModalLogin = () =>{
+		this.setState({
+			visible:true,
+			type:true,
+			rp:false
+		})
+	}
+	
+	handleCancel = () => {
+		this.onCloseModal(false, false,false);
+		this.setState({
+			visible: false,
+			type:false,
+			visibleF:false,
+			rp:false
 		})
 	};
 
@@ -51,7 +79,7 @@ class ModalComponent extends Component {
 		this.formRef = formRef;
 	};
 	render() {
-		let { visible, type } = this.state;
+		let { visible, type, visibleF, rp } = this.state;
 		return (
 			<div>
 				{type ?
@@ -60,6 +88,9 @@ class ModalComponent extends Component {
 						visible={visible}
 						onCancel={this.handleCancel}
 						onCreate={this.handleCreate}
+						onChangeSign={this.changeModalSign}
+						onChangeForget={this.changeModalForget}
+						
 					/>)
 					: (
 						<CollectionCreateFormSignin
@@ -67,9 +98,20 @@ class ModalComponent extends Component {
 							visible={visible}
 							onCancel={this.handleCancel}
 							onCreate={this.handleCreate}
+							onChangeLogin={this.changeModalLogin}
+							onDispatch={this.props.onDispatchRegis}
+							rp={rp}
 						/>
 
-		  )}
+				)}
+
+				<CollectionCreateFormForget
+					wrappedComponentRef={this.saveFormRef}
+					visible={visibleF}
+					onCancel={this.handleCancel}
+					onCreate={this.handleCreate}
+				/>
+
 			</div>
 
 		);
@@ -79,6 +121,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		onDispatch: (visible, set) => {
 			dispatch(actOpenModal(visible, set))
+		},
+		onDispatchRegis:(newuser)=>{
+			dispatch(actRegisterUser(newuser))
 		}
 
 	}
@@ -86,7 +131,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
 	return {
 		visibled: state.stateModal.visible,
-		set: state.stateModal.set
+		set: state.stateModal.set,
+		rp: state.stateModal.rp
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ModalComponent);

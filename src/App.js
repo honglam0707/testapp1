@@ -3,25 +3,32 @@ import 'antd/dist/antd.css';
 import './App.css';
 import HeaderComponent from './components/header';
 import ModalComponent from './components/modal';
+import ListComponent from './components/list';
+import ListKHComponent from './components/listKh'
 import { connect } from 'react-redux';
-import {actOpenModal} from './store/action';
+
 class App extends Component{
+	
 	render(){
+		const {status}=this.props;
 		return (
 			<div className="App">
 			  <HeaderComponent/>
+			  {status?(
+				<ListKHComponent/>
+			  ):(
+				<ListComponent/>
+			  )}
 			  
-			  <ModalComponent domRef={this.childRef}/>
+			  <ModalComponent/>
 			</div>
 		  );
 	}
 }
-const mapDispatchToProps = (dispatch) => {
-	return {
-		onDispatch: (visible, set) => {
-			dispatch(actOpenModal(visible, set))
-		}
 
+const mapStateToProps=(state)=>{
+	return{
+		status:state.changeList,
 	}
 }
-export default connect(null,mapDispatchToProps)(App);
+export default connect(null,null)(App);

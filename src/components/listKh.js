@@ -2,25 +2,23 @@ import React,{Component} from 'react'
 import {Table,Tag,Divider,Button,Modal} from 'antd'
 import {actOpenModal} from '../store/action'
 import {connect} from 'react-redux';
-import axios from 'axios'
+import axios from 'axios';
 const { confirm } = Modal;
 
-
-
-class ListComponent extends Component{
+class ListKHComponent extends Component{
 	constructor(props){
 		super(props);
 		this.state={
-			member:[]
+			course:[]
 		}
 	}
 	componentDidMount(){
 		axios({
 			method:'GET',
-			url:'http://localhost:1234/user/member'
+			url:'http://localhost:1234/kh'
 		}).then(res=>{
 			this.setState({
-				member:res.data
+				course:res.data
 			})
 		}).catch(err=>{
 			console.log(err)
@@ -43,7 +41,7 @@ class ListComponent extends Component{
 	}
 	
 	render(){
-		const {member} = this.state;
+		const {course}=this.state;
 		const columns=[
 		{
 			title:'STT',
@@ -54,25 +52,9 @@ class ListComponent extends Component{
 			title:'Name',
 			dataIndex:'name',
 			key:'name',
-		},
-		{
-			title:'email',
-			dataIndex:'email',
-			key:'email',
-			render:text => <a>{text}</a>
-		},
-		{
-			title:'BirthOfDate',
-			dataIndex:'birthOfDate',
-			key:'birthOfDate'
-		},
-		{
-			title:'KH_List',
-			dataIndex:'kh_list',
-			key:'kh_list',
-			render: kh_list => (
+			render: name => (
 				<span>
-					{kh_list.map(tag => {
+					{name.map(tag => {
 					  let color = 'grey';
 					  if(tag==='API') color = 'geekblue';
 					  else if(tag==='FrontEnd') color = 'green';
@@ -90,14 +72,24 @@ class ListComponent extends Component{
 			)
 		},
 		{
-			title:'UserType',
-			dataIndex:'UserType',
-			key:'UserType'
+			title:'timeStart',
+			dataIndex:'timeStart',
+			key:'timeStart'
 		},
 		{
-			title:'Phone',
-			dataIndex:'Phone',
-			key:'Phone'
+			title:'timeEnd',
+			dataIndex:'timeEnd',
+			key:'timeEnd'
+		},
+		{
+			title:'GV',
+			dataIndex:'GV',
+			key:'GV'
+		},
+		{
+			title:'Status',
+			dataIndex:'Status',
+			key:'Status'
 		},
 		{
 			title: 'Action',
@@ -114,7 +106,7 @@ class ListComponent extends Component{
 		
 		return(
 			<div className='list'>
-				<Table columns={columns} dataSource={member} />
+				<Table columns={columns} dataSource={course} />
 			</div>
 		);
 	}
@@ -127,4 +119,4 @@ const mapDispatchToProps=(dispatch)=>{
 	
 	}
 }
-export default connect(null,mapDispatchToProps)(ListComponent);
+export default connect(null,mapDispatchToProps)(ListKHComponent);
