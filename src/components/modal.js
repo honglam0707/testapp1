@@ -17,8 +17,8 @@ class ModalComponent extends Component {
 		}
 
 	}
-	onCloseModal = (visible, set) => {
-		this.props.onDispatch(visible, set);
+	onCloseModal = (visible, set,rp) => {
+		this.props.onDispatch(visible, set,rp);
 	}
 	UNSAFE_componentWillReceiveProps(nextProps) {
 		if (nextProps.visibled) {
@@ -99,7 +99,7 @@ class ModalComponent extends Component {
 							onCancel={this.handleCancel}
 							onCreate={this.handleCreate}
 							onChangeLogin={this.changeModalLogin}
-							onDispatch={this.props.onDispatchRegis}
+							onRegis={this.props.onDispatchRegis}
 							rp={rp}
 						/>
 
@@ -119,8 +119,8 @@ class ModalComponent extends Component {
 }
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onDispatch: (visible, set) => {
-			dispatch(actOpenModal(visible, set))
+		onDispatch: (visible, set,rp) => {
+			dispatch(actOpenModal(visible, set,rp))
 		},
 		onDispatchRegis:(newuser)=>{
 			dispatch(actRegisterUser(newuser))

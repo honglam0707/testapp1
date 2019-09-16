@@ -106,7 +106,7 @@ class ListKHComponent extends Component{
 		
 		return(
 			<div className='list'>
-				<Table columns={columns} dataSource={course} />
+				<Table columns={columns} dataSource={course}  rowKey={record => record.uid}  />
 			</div>
 		);
 	}

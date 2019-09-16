@@ -10,59 +10,60 @@ export  const CollectionCreateFormSignin = Form.create({ name: 'form_in_modal' }
 		constructor(props){
 			super(props);
 			this.state={
-				name:'',
+				fullName:'',
 				email:'',
 				password:'',
 				birthOfDate:'',
 				phone:'',
 				sex:'male',
 				address:'',
-				userType:''
+				userType:'HV'
 			}
 		}
-		componentWillReceiveProps(nextProps){
-        let {editedTask} = nextProps;
-        if(editedTask){
-            let {name,email,password,birthOfDate,phone,address,userType} = editedTask;
-            this.setState({
-                name,email,password,birthOfDate,phone,address,userType
-            })
-        }
-        if(!nextProps.rp){
-            this.setState({
-                name:'',
-				email:'',
-				password:'',
-				birthOfDate:'',
-				phone:'',
-				sex:'male',
-				address:'',
-				userType:''
-            });
-        }
-    }
+		// componentWillReceiveProps(nextProps){
+        // let {editedTask} = nextProps;
+        // if(editedTask){
+        //     let {fullName,email,password,birthOfDate,phone,address,userType} = editedTask;
+        //     this.setState({
+        //         fullName,email,password,birthOfDate,phone,address,userType
+        //     })
+        // }
+        // if(!nextProps.rp){
+        //     this.setState({
+        //         fullName:'',
+		// 		email:'',
+		// 		password:'',
+		// 		birthOfDate:'',
+		// 		phone:'',
+		// 		sex:'male',
+		// 		address:'',
+		// 		userType:'HV'
+        //     });
+        // }
+    //}
 		handleOnSubmit=(e)=>{
 			e.preventDefault();
 			if(this.props.rp)
 			{
-				this.props.onDispatch(this.state);
+				this.props.onRegis(this.state);
 			}
 			else
 			{
-				this.props.onDispatch(this.state);
+				this.props.onRegis(this.state);
 			}
 			
 			this.props.onCancel();
 		}
 		handleOnChange=(e)=>{
 			this.setState({
+			
 				[e.target.name]: e.target.value,
 			})
 		}
         render() {
             const { visible, onCancel, onCreate, onChangeLogin, form , rp} = this.props;
             const { getFieldDecorator } = form;
-			const {name,email,password,birthOfDate,phone,userType,sex,address} = this.state;
+			const {fullName,email,password,birthOfDate,phone,userType,sex,address} = this.state;
             return (
                 <Modal
                     visible={visible}
@@ -82,9 +83,9 @@ export  const CollectionCreateFormSignin = Form.create({ name: 'form_in_modal' }
 									prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
 									placeholder="Username"
 									size='large'
-									id='username'
-									name='name'
-									value={name}
+									id='fullName'
+									name='fullName'
+									setFieldsValue={fullName}
 									onChange={this.handleOnChange}
 								/>
 							)}
@@ -100,7 +101,7 @@ export  const CollectionCreateFormSignin = Form.create({ name: 'form_in_modal' }
 									size='large'
 									id='password'
 									name='password'
-									value={password}
+									setFieldsValue={password}
 									onChange={this.handleOnChange}
 								/>
 							)}
@@ -115,7 +116,7 @@ export  const CollectionCreateFormSignin = Form.create({ name: 'form_in_modal' }
 									size='large'
 									id='email'
 									name='email'
-									value={email}
+									setFieldsValue={email}
 									onChange={this.handleOnChange}
 								/>
 							)}
@@ -137,7 +138,7 @@ export  const CollectionCreateFormSignin = Form.create({ name: 'form_in_modal' }
 											size='large'
 											id='phone'
 											name='phone'
-											value={phone}
+											setFieldsValue={phone}
 											onChange={this.handleOnChange}
 										/>
 									)}
@@ -157,7 +158,7 @@ export  const CollectionCreateFormSignin = Form.create({ name: 'form_in_modal' }
 									size='large'
 									id='address'
 									name='address'
-									value={address}
+									setFieldsValue={address}
 									onChange={this.handleOnChange}
 								/>
 							)}

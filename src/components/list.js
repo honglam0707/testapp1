@@ -17,7 +17,7 @@ class ListComponent extends Component{
 	componentDidMount(){
 		axios({
 			method:'GET',
-			url:'http://localhost:1234/user/member'
+			url:'http://localhost:1234/user/dsmember'
 		}).then(res=>{
 			this.setState({
 				member:res.data
@@ -51,9 +51,9 @@ class ListComponent extends Component{
 			key:'stt'
 		},
 		{
-			title:'Name',
-			dataIndex:'name',
-			key:'name',
+			title:'fullName',
+			dataIndex:'fullName',
+			key:'fullName',
 		},
 		{
 			title:'email',
@@ -91,13 +91,13 @@ class ListComponent extends Component{
 		},
 		{
 			title:'UserType',
-			dataIndex:'UserType',
-			key:'UserType'
+			dataIndex:'userType',
+			key:'userType'
 		},
 		{
 			title:'Phone',
-			dataIndex:'Phone',
-			key:'Phone'
+			dataIndex:'phone',
+			key:'phone'
 		},
 		{
 			title: 'Action',
@@ -114,7 +114,7 @@ class ListComponent extends Component{
 		
 		return(
 			<div className='list'>
-				<Table columns={columns} dataSource={member} />
+				<Table columns={columns} dataSource={member}  rowKey={record => record.uid} />
 			</div>
 		);
 	}
